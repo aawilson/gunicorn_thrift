@@ -97,7 +97,7 @@ class GeventThriftPyWorker(GeventWorker, ProcessorMixin):
 
         return super(GeventThriftPyWorker, self).init_process()
 
-    def _greenlet_switch_tracer(self, what, (origin, target)):
+    def _greenlet_switch_tracer(self, what, where):
         """Callback method executed on every greenlet switch.
 
         The worker arranges for this method to be called on every greenlet
@@ -107,6 +107,7 @@ class GeventThriftPyWorker(GeventWorker, ProcessorMixin):
         # Increment the counter to indicate that a switch took place.
         # This will periodically be reset to zero by the monitoring thread,
         # so we don't need to worry about it growing without bound.
+        origin, target = where
         self._active_greenlet = target
         self._greenlet_switch_counter += 1
 
