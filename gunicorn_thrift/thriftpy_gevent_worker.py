@@ -4,10 +4,15 @@
 import sys
 import time
 import errno
-import thread
 import socket
 import logging
 import traceback
+
+try:
+    import thread
+except ImportError:
+    # Python 3
+    import _thread as thread
 
 try:
     import gevent
